@@ -166,4 +166,38 @@
                     const name = document.getElementById("name").value.trim();
                     const email = document.getElementById("email").value.trim();
                     const phone = document.getElementById("phone").value.trim();
-                    const date = docume
+                    const date = document.getElementById("date").value;
+                    const eventType = document.getElementById("eventType").value;
+                    const message = document.getElementById("message").value.trim();
+                    if (name || email || phone || date || eventType || message) {
+                        return "You have unsaved changes. Are you sure you want to leave?";
+                    }
+                }
+
+                function loadPreferences() {
+                    const preferred = localStorage.getItem("preferredEvent");
+                    if (preferred) {
+                        document.getElementById("eventType").value = preferred;
+                        showFeeAndSave();
+                    }
+                }
+
+                function clearPreferences() {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    alert("Preferences cleared.");
+                }
+            </script>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Local City Council</p>
+    </footer>
+</body>
+</html>
