@@ -161,8 +161,13 @@
                 }
 
                 function warnOnUnload() {
-                    const message = document.getElementById("name").value || document.getElementById("email").value || document.getElementById("message").value;
-                    if (message) {
+                    const name = document.getElementById("name").value.trim();
+                    const email = document.getElementById("email").value.trim();
+                    const phone = document.getElementById("phone").value.trim();
+                    const date = document.getElementById("date").value;
+                    const eventType = document.getElementById("eventType").value;
+                    const message = document.getElementById("message").value.trim();
+                    if (name || email || phone || date || eventType || message) {
                         return "You have unsaved changes. Are you sure you want to leave?";
                     }
                 }
