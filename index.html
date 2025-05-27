@@ -47,7 +47,7 @@
         }
     </style>
 </head>
-<body onbeforeunload="return warnOnUnload()">
+<body onbeforeunload="return warnOnUnload()" onload="loadPreferences()">
     <!-- Navigation -->
     <nav>
         <a href="#home">Home</a> |
@@ -103,7 +103,7 @@
                 <input type="date" id="date" name="date" required>
 
                 <label for="eventType">Event Type:</label>
-                <select id="eventType" name="eventType" required onchange="showFee()">
+                <select id="eventType" name="eventType" required onchange="showFeeAndSave()">
                     <option value="">Select an event</option>
                     <option value="cleanup">Community Cleanup</option>
                     <option value="workshop">Workshop</option>
@@ -116,6 +116,7 @@
                 <p id="charCount">Characters: 0</p>
 
                 <button type="submit" onclick="confirmSubmission()">Register</button>
+                <button type="button" onclick="clearPreferences()">Clear Preferences</button>
                 <output id="confirmation"></output>
             </form>
 
@@ -134,13 +135,14 @@
                     }
                 }
 
-                function showFee() {
+                function showFeeAndSave() {
                     const eventType = document.getElementById("eventType").value;
                     let fee = "";
                     if (eventType === "cleanup") fee = "$5";
                     else if (eventType === "workshop") fee = "$10";
                     else if (eventType === "festival") fee = "$15";
                     document.getElementById("feeInfo").textContent = `Fee: ${fee}`;
+                    localStorage.setItem("preferredEvent", eventType);
                 }
 
                 function confirmSubmission() {
@@ -164,24 +166,4 @@
                     const name = document.getElementById("name").value.trim();
                     const email = document.getElementById("email").value.trim();
                     const phone = document.getElementById("phone").value.trim();
-                    const date = document.getElementById("date").value;
-                    const eventType = document.getElementById("eventType").value;
-                    const message = document.getElementById("message").value.trim();
-                    if (name || email || phone || date || eventType || message) {
-                        return "You have unsaved changes. Are you sure you want to leave?";
-                    }
-                }
-            </script>
-        </section>
-
-        <section id="contact">
-            <h2>Contact Us</h2>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Local City Council</p>
-    </footer>
-</body>
-</html>
+                    const date = docume
