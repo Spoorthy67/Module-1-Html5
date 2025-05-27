@@ -71,14 +71,14 @@
             <table>
                 <caption>Past Community Events</caption>
                 <tr>
-                    <td><img class="event-img" src="event1.jpg" alt="Community Cleanup" title="Community Cleanup"></td>
-                    <td><img class="event-img" src="event2.jpg" alt="Food Drive" title="Food Drive"></td>
-                    <td><img class="event-img" src="event3.jpg" alt="Music Festival" title="Music Festival"></td>
+                    <td><img class="event-img" src="event1.jpg" alt="Community Cleanup" title="Community Cleanup" ondblclick="enlargeImage(this)"></td>
+                    <td><img class="event-img" src="event2.jpg" alt="Food Drive" title="Food Drive" ondblclick="enlargeImage(this)"></td>
+                    <td><img class="event-img" src="event3.jpg" alt="Music Festival" title="Music Festival" ondblclick="enlargeImage(this)"></td>
                 </tr>
                 <tr>
-                    <td><img class="event-img" src="event4.jpg" alt="Art Workshop" title="Art Workshop"></td>
-                    <td><img class="event-img" src="event5.jpg" alt="Health Camp" title="Health Camp"></td>
-                    <td><img class="event-img" src="event6.jpg" alt="Charity Run" title="Charity Run"></td>
+                    <td><img class="event-img" src="event4.jpg" alt="Art Workshop" title="Art Workshop" ondblclick="enlargeImage(this)"></td>
+                    <td><img class="event-img" src="event5.jpg" alt="Health Camp" title="Health Camp" ondblclick="enlargeImage(this)"></td>
+                    <td><img class="event-img" src="event6.jpg" alt="Charity Run" title="Charity Run" ondblclick="enlargeImage(this)"></td>
                 </tr>
             </table>
 
@@ -90,26 +90,64 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="Your Email" required>
 
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" placeholder="1234567890" onblur="validatePhone()">
+
                 <label for="date">Event Date:</label>
                 <input type="date" id="date" name="date" required>
 
                 <label for="eventType">Event Type:</label>
-                <select id="eventType" name="eventType" required>
+                <select id="eventType" name="eventType" required onchange="showFee()">
+                    <option value="">Select an event</option>
                     <option value="cleanup">Community Cleanup</option>
                     <option value="workshop">Workshop</option>
                     <option value="festival">Festival</option>
                 </select>
+                <p id="feeInfo"></p>
 
                 <label for="message">Message:</label>
-                <textarea id="message" name="message" placeholder="Enter any comments..."></textarea>
+                <textarea id="message" name="message" placeholder="Enter any comments..." onkeyup="countCharacters()"></textarea>
+                <p id="charCount">Characters: 0</p>
 
-                <button type="submit">Register</button>
+                <button type="submit" onclick="confirmSubmission()">Register</button>
                 <output id="confirmation"></output>
             </form>
+
             <script>
                 function handleSubmit(event) {
                     event.preventDefault();
                     document.getElementById("confirmation").textContent = "Thank you for registering!";
+                }
+
+                function validatePhone() {
+                    const phone = document.getElementById("phone").value;
+                    const pattern = /^\d{10}$/;
+                    if (!pattern.test(phone)) {
+                        alert("Please enter a valid 10-digit phone number.");
+                        document.getElementById("phone").focus();
+                    }
+                }
+
+                function showFee() {
+                    const eventType = document.getElementById("eventType").value;
+                    let fee = "";
+                    if (eventType === "cleanup") fee = "$5";
+                    else if (eventType === "workshop") fee = "$10";
+                    else if (eventType === "festival") fee = "$15";
+                    document.getElementById("feeInfo").textContent = `Fee: ${fee}`;
+                }
+
+                function confirmSubmission() {
+                    alert("Your registration is being submitted.");
+                }
+
+                function enlargeImage(img) {
+                    img.style.width = "300px";
+                }
+
+                function countCharacters() {
+                    const text = document.getElementById("message").value;
+                    document.getElementById("charCount").textContent = `Characters: ${text.length}`;
                 }
             </script>
         </section>
