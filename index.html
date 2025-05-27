@@ -47,7 +47,7 @@
         }
     </style>
 </head>
-<body>
+<body onbeforeunload="return warnOnUnload()">
     <!-- Navigation -->
     <nav>
         <a href="#home">Home</a> |
@@ -68,6 +68,12 @@
 
         <section id="events">
             <h2>Upcoming Events</h2>
+            <video id="promoVideo" width="320" height="240" controls oncanplay="videoReadyMessage()">
+                <source src="promo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p id="videoStatus"></p>
+
             <table>
                 <caption>Past Community Events</caption>
                 <tr>
@@ -148,6 +154,17 @@
                 function countCharacters() {
                     const text = document.getElementById("message").value;
                     document.getElementById("charCount").textContent = `Characters: ${text.length}`;
+                }
+
+                function videoReadyMessage() {
+                    document.getElementById("videoStatus").textContent = "Video ready to play";
+                }
+
+                function warnOnUnload() {
+                    const message = document.getElementById("name").value || document.getElementById("email").value || document.getElementById("message").value;
+                    if (message) {
+                        return "You have unsaved changes. Are you sure you want to leave?";
+                    }
                 }
             </script>
         </section>
